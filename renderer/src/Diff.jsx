@@ -1,44 +1,45 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useAtom } from "jotai";
+import { repositoriesAtom } from "./atom";
 
-const Diff = ({ REPOSITORIES, GITHUB_BASE }) => {
-  const [repository, setRepository] = useState(REPOSITORIES[0].name);
+const Diff = () => {
+  const [repositories] = useAtom(repositoriesAtom);
+  const [selectedRepoName, setSelectedRepoName] = useState(
+    repositories[0].name
+  );
   const [compare1, setCompare1] = useState("");
   const [compare2, setCompare2] = useState("");
   const [resultUrl, setResultUrl] = useState("");
-  const [activate, setActivate] = useState(false);
-  const textareaRef = useRef(null);
+
+  const selectedRepo = useMemo(
+    () => repositories?.find((r) => r.name === selectedRepoName),
+    [selectedRepoName]
+  );
 
   const diffUrl = useMemo(() => {
-    if (!compare1 || !compare2 || !repository) {
-      setActivate(false);
-      return "";
-    } else {
-      setActivate(true);
-      return `${GITHUB_BASE}${repository}/compare/${compare1}...${compare2}`;
-    }
-  }, [repository, compare1, compare2]);
+    if (!selectedRepo || !compare1 || !compare2) return "";
+    return `${selectedRepo.url}/compare/${compare1}...${compare2}`;
+  }, [selectedRepo, compare1, compare2]);
 
   useEffect(() => {
     setResultUrl(diffUrl);
   }, [diffUrl]);
 
-  const copyToClipboard = () => {
-    textareaRef.current.select();
-    document.execCommand("copy");
-  };
+  const activate = !!diffUrl;
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    copyToClipboard(diffUrl);
+  const copyToClipboard = async () => {
+    if (!resultUrl) return;
+    await navigator.clipboard.writeText(resultUrl);
   };
 
   return (
     <section className="box_main">
       <h2 className="text_title2">
-        Diff <span className="material-symbols-outlined">draw_collage</span>
+        diff <span className="material-symbols-outlined">draw_collage</span>
       </h2>
+
       <ul className="list_option" role="radiogroup" aria-label="Repository">
-        {REPOSITORIES.map((repo, idx) => (
+        {repositories.map((repo, idx) => (
           <li className="list-item" key={repo.name}>
             <input
               type="radio"
@@ -46,61 +47,61 @@ const Diff = ({ REPOSITORIES, GITHUB_BASE }) => {
               name="repository"
               className="form_repository"
               value={repo.name}
-              checked={repository === repo.name}
-              onChange={(e) => setRepository(e.target.value)}
+              checked={selectedRepoName === repo.name}
+              onChange={(e) => setSelectedRepoName(e.target.value)}
             />
             <label htmlFor={`repository-${idx}`}>{repo.name}</label>
           </li>
         ))}
       </ul>
-      <form onSubmit={onSubmit} className="form">
-        <div className="box_entry">
-          <div className="box_entry-inner">
-            <span className="text_entry-line">origin</span>
-            <input
-              id="compare1"
-              className="form_entry"
-              type="text"
-              value={compare1}
-              onChange={(e) => setCompare1(e.target.value)}
-              autoComplete="off"
-            />
-          </div>
-          <div className="box_entry-inner">
-            <span className="text_entry-line">change</span>
-            <input
-              id="compare2"
-              className="form_entry"
-              type="text"
-              value={compare2}
-              onChange={(e) => setCompare2(e.target.value)}
-              autoComplete="off"
-            />
-          </div>
-        </div>
-        <div className="box_result">
-          <p className="text_result">
-            {resultUrl || "비교 대상을 입력해주세요."}
-          </p>
-          <textarea
-            ref={textareaRef}
-            className="form_result"
-            value={resultUrl}
-            onChange={(e) => setResultUrl(e.target.value)}
-            rows={4}
-            spellCheck={false}
+
+      <div className="box_entry">
+        <div className="box_entry-inner">
+          <span className="text_entry-line">origin</span>
+          <input
+            id="compare1"
+            className="form_entry"
+            type="text"
+            value={compare1}
+            onChange={(e) => setCompare1(e.target.value)}
+            autoComplete="off"
           />
         </div>
-      </form>
+        <div className="box_entry-inner">
+          <span className="text_entry-line">change</span>
+          <input
+            id="compare2"
+            className="form_entry"
+            type="text"
+            value={compare2}
+            onChange={(e) => setCompare2(e.target.value)}
+            autoComplete="off"
+          />
+        </div>
+      </div>
+
+      <div className="box_result">
+        <p className="text_result">
+          {resultUrl || "비교 대상을 입력해주세요."}
+        </p>
+      </div>
+
       <div className="box_main-bottom">
-        <button className="submit_entry submit" type="submit">
+        <button
+          className="submit_entry submit"
+          type="button"
+          onClick={copyToClipboard}
+        >
           <span className="material-symbols-outlined icon">content_copy</span>
           Link copy
         </button>
+
         <a
           className={activate ? "link_entry" : "link_entry deactivate"}
-          href={diffUrl}
-          target="blank_"
+          href={diffUrl || "#"}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-disabled={!activate}
         >
           Go Link
           <span className="material-symbols-outlined icon">
@@ -111,4 +112,5 @@ const Diff = ({ REPOSITORIES, GITHUB_BASE }) => {
     </section>
   );
 };
+
 export default Diff;

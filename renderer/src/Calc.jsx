@@ -15,12 +15,12 @@ const Calc = () => {
   return (
     <section className="box_main">
       <h2 className="text_title2">
-        Calc <span className="material-symbols-outlined">calculate</span>
+        calc <span className="material-symbols-outlined">calculate</span>
       </h2>
-      <div className="box_entry left">
+      <div className="box_entry left line">
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare1}
             onChange={(e) => setCompare1(e.target.value)}
@@ -30,7 +30,7 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare2}
             onChange={(e) => setCompare2(e.target.value)}
@@ -40,7 +40,7 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={(compare2 / compare1) * 100}
             readOnly
@@ -51,7 +51,7 @@ const Calc = () => {
       <div className="box_entry left line">
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare3}
             onChange={(e) => setCompare3(e.target.value)}
@@ -61,7 +61,7 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare4}
             onChange={(e) => setCompare4(e.target.value)}
@@ -71,7 +71,7 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={(compare3 * compare4) / 100}
             readOnly
@@ -81,7 +81,7 @@ const Calc = () => {
       <div className="box_entry left line">
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare5}
             onChange={(e) => setCompare5(e.target.value)}
@@ -91,7 +91,7 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare6}
             onChange={(e) => setCompare6(e.target.value)}
@@ -101,7 +101,7 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare5 * (1 + compare6 / 100)}
             readOnly
@@ -111,7 +111,7 @@ const Calc = () => {
       <div className="box_entry left line">
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare7}
             onChange={(e) => setCompare7(e.target.value)}
@@ -121,7 +121,7 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare8}
             onChange={(e) => setCompare8(e.target.value)}
@@ -131,17 +131,17 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare7 * (1 - compare8 / 100)}
             readOnly
           />
         </div>
       </div>
-      <div className="box_entry left line">
+      <div className="box_entry left">
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare9}
             onChange={(e) => setCompare9(e.target.value)}
@@ -151,7 +151,7 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={compare10}
             onChange={(e) => setCompare10(e.target.value)}
@@ -161,7 +161,7 @@ const Calc = () => {
         </div>
         <div className="box_entry-inner">
           <input
-            className="form_entry form_entry-triple"
+            className="form_entry triple"
             type="text"
             value={((compare10 - compare9) / compare9) * 100}
             readOnly

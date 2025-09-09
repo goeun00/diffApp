@@ -55,7 +55,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60px;
+  width: 55px;
   padding: 16px 8px 16px;
   background: var(--color-background-soft);
   flex-shrink: 0;
@@ -67,11 +67,11 @@
       }
       .link {
         opacity: 0.7;
-        font-size: 13px;
+        font-size: 12.5px;
         font-weight: 500;
         color: var(--color-text);
         transition: color 0.2s, opacity 0.2s;
-        letter-spacing: -0.2px;
+        letter-spacing: -0.3px;
         &:hover {
           opacity: 1;
         }
@@ -83,7 +83,7 @@
       }
       .icon {
         display: block;
-        font-size: 25px;
+        font-size: 26px;
       }
     }
   }
@@ -91,10 +91,10 @@
     opacity: 0.7;
     margin-top: auto;
     border: 0;
-    cursor: pointer;
-    color: var(--color-text);
     background: none;
+    color: var(--color-text);
     transition: 0.2s;
+    cursor: pointer;
     &:hover {
       opacity: 1;
     }
@@ -104,15 +104,43 @@
   }
 }
 .box_main {
-  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
   width: 100%;
   height: 100%;
+  padding: 12px;
+  gap: 16px;
+  margin-right: 8px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-button:single-button:vertical:decrement,
+  &::-webkit-scrollbar-button:single-button:vertical:increment {
+    display: block;
+    height: 8px;
+    background: transparent;
+    border: 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    min-height: 24px;
+    border-radius: 8px;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 40%,
+      var(--color-secondary) 100%
+    );
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background: var(--color-background);
+  }
   .box_main-bottom {
-    margin-top: auto;
     width: 100%;
+    margin-top: auto;
   }
   .text_title2 {
     font-size: 18px;
@@ -121,13 +149,14 @@
   }
   .list_option {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
     gap: 8px 5px;
     .list-item {
       label {
         display: inline-block;
+        opacity: 0.8;
         padding: 5px 10px;
         border-radius: 20px;
         background: var(--color-background-soft);
@@ -136,16 +165,15 @@
         transition: 0.2s;
         cursor: pointer;
         letter-spacing: -0.3px;
-        opacity: 0.8;
         &:hover {
           opacity: 1;
         }
       }
       .form_repository {
         &:checked + label {
+          opacity: 1;
           background: var(--color-primary);
           color: var(--color-white);
-          opacity: 1;
         }
       }
     }
@@ -153,35 +181,79 @@
   .form {
     width: 100%;
   }
+
   .box_entry {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    width: 100%;
     font-size: 0;
     gap: 0 8px;
-    width: 100%;
     &.left {
       justify-content: flex-start;
+      .box_entry-inner {
+        display: block;
+        text-align: left;
+        &.flex {
+          display: flex;
+          width: 100%;
+          .form_entry {
+            flex-grow: 1;
+          }
+        }
+      }
     }
     &.line {
-      border-top: 1px solid var(--color-background);
-      padding-top: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-background);
+    }
+    &.wrap {
+      flex-wrap: wrap;
+      gap: 6px 0;
+    }
+    .text__tag {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: var(--color-background);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text);
+      opacity: 0.85;
+      + .text__tag {
+        margin-left: 4px;
+      }
+    }
+    .link_text {
+      color: var(--color-text);
+      transition: 0.2s;
+      &:hover {
+        color: var(--color-primary);
+      }
     }
     .text_entry-basic {
+      padding: 6px 0;
       font-size: 13px;
       color: var(--color-text);
+      &.bold {
+        font-weight: bold;
+      }
     }
     .text_entry-line {
-      margin-right: 6px;
-      padding-right: 6px;
+      display: inline-block;
+      padding: 6px 8px;
       font-size: 13px;
       font-weight: bold;
       color: var(--color-primary);
-      border-right: 1px solid var(--color-muted);
+      &::after {
+        content: "";
+        padding-left: 6px;
+        border-right: 1px solid var(--color-muted);
+      }
     }
     .form_entry {
       width: 111px;
-      padding: 4px 8px;
+      padding: 3px 8px;
       border: 2px solid #00000000;
       border-radius: 15px;
       background: var(--color-background);
@@ -190,12 +262,12 @@
         border: 2px solid var(--color-primary);
         outline: none;
       }
-    }
-    .form_entry-single {
-      width: 222px;
-    }
-    .form_entry-triple {
-      width: 75px;
+      &.single {
+        width: 286px;
+      }
+      &.triple {
+        width: 75px;
+      }
     }
   }
   .submit_entry {
@@ -248,7 +320,6 @@
   }
   .box_result {
     position: relative;
-    max-height: 100px;
     margin: 24px 0;
     padding: 16px 24px;
     font-size: 13px;
@@ -256,30 +327,60 @@
     line-height: 1.45;
     border-top: 1px solid var(--color-muted);
     word-break: break-all;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-      width: 5px;
-      background: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-      min-height: 24px;
-      border-radius: 8px;
-      background: linear-gradient(
-        135deg,
-        var(--color-primary) 40%,
-        var(--color-secondary) 100%
-      );
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    }
-    &::-webkit-scrollbar-track {
-      border-radius: 8px;
-      background: var(--color-background);
+  }
+  .button_delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4px;
+    .icon {
+      font-size: 20px;
+      color: var(--color-text);
     }
   }
-  .form_result {
-    opacity: 0;
+  .box_add-repositoty {
+    display: inline-block;
+    width: auto;
+    margin: 10px;
+    .button_add-repositoty {
+      margin-bottom: 8px;
+      padding: 8px;
+      border-radius: 50%;
+      background: var(--color-background);
+      color: var(--color-primary);
+      transition: 0.2s;
+      &:hover {
+        transform: rotate(180deg);
+      }
+    }
+    .text {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--color-primary);
+      letter-spacing: -0.2px;
+      text-transform: capitalize;
+    }
+  }
+  .box_floating {
     position: absolute;
-    width: 0;
-    height: 0;
+    right: 18px;
+    bottom: 18px;
+    z-index: 100;
+    .button {
+      display: block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+
+      + .button {
+        margin-top: 8px;
+      }
+    }
+    .icon {
+      font-size: 21px;
+      color: var(--color-white);
+    }
   }
 }

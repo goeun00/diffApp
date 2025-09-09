@@ -1,6 +1,6 @@
 {
-  "name": "my-electron-app",
-  "version": "0.1.0",
+  "name": "diffurltool",
+  "version": "0.1.1",
   "description": "Hello GUI EXE with Electron",
   "main": "main.js",
   "author": "Goeun",
@@ -8,28 +8,47 @@
   "scripts": {
     "dev": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "predist": "del-cli dist/**",
+    "dist": "dotenv -e .env -- electron-builder -p always"
   },
   "build": {
-    "appId": "com.goeun.my-electron-app",
-    "productName": "MyElectronApp",
+    "appId": "com.goeun.diffurltool",
+    "productName": "DiffUrlTool",
     "files": [
       "main.js",
       "preload.js",
-      "renderer/**",
       "renderer/dist/**",
       "assets/**",
       "package.json"
     ],
     "win": {
-      "target": "portable"
-    }
+      "target": "nsis"
+    },
+    "generateUpdatesFilesForAllChannels": true,
+    "nsis": {
+      "artifactName": "DiffUrlTool Setup.exe"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "goeun00",
+        "repo": "diffApp"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goeun00/diffApp.git"
   },
   "devDependencies": {
+    "cross-env": "^10.0.0",
+    "del-cli": "^6.0.0",
+    "dotenv-cli": "^10.0.0",
     "electron": "^32.0.0",
     "electron-builder": "^24.13.3"
   },
   "dependencies": {
+    "electron-updater": "^6.6.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   }

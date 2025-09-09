@@ -1,7 +1,16 @@
 // main.js
-const { app, BrowserWindow, ipcMain, Menu, shell } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Menu,
+  shell,
+  dialog,
+} = require("electron");
+const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const isDev = !app.isPackaged;
+let win;
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -53,6 +62,37 @@ app.whenReady().then(() => {
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+
+  if (app.isPackaged) {
+    autoUpdater.autoDownload = true;
+    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.on("update-available", () => {
+      win?.webContents.send("update:available");
+    });
+
+    autoUpdater.on("download-progress", (p) => {
+      win?.webContents.send("update:progress", Math.round(p.percent));
+    });
+
+    autoUpdater.on("update-downloaded", () => {
+      dialog
+        .showMessageBox(win, {
+          type: "info",
+          buttons: ["지금 재시작", "나중에"],
+          title: "업데이트 준비 완료",
+          message: "새 버전이 다운로드되었습니다. 지금 적용할까요?",
+        })
+        .then((r) => {
+          if (r.response === 0) {
+            autoUpdater.quitAndInstall();
+          }
+        });
+    });
+
+    autoUpdater.on("error", (err) => {
+      win?.webContents.send("update:error", String(err));
+    });
+  }
 });
 
 // 윈도우에서 모든 창 닫히면 종료

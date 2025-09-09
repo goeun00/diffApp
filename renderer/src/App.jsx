@@ -1,20 +1,10 @@
 import { Routes, Route, NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import "./App.css";
 import Diff from "./Diff.jsx";
 import Pr from "./Pr.jsx";
 import Calc from "./Calc.jsx";
-
-let GITHUB_BASE = "https://github.gmarket.com/org-publisher/";
-const REPOSITORIES = [
-  { name: "starro", mainbranch: ["main", "stage", "dev"] },
-  { name: "starro-esm", mainbranch: ["main", "stage", "dev"] },
-  { name: "Publish.GMKT.PC", mainbranch: ["master", "stg", "dev"] },
-  { name: "Publish.GMKT.Mobile", mainbranch: ["master", "stg", "dev"] },
-  { name: "Publish.IAC.PC", mainbranch: ["master", "stg", "dev"] },
-  { name: "Publish.IAC.Mobile", mainbranch: ["master", "stg", "dev"] },
-  { name: "Publish.Ebay", mainbranch: ["master", "stg", "dev"] },
-];
+import Github from "./GIthub.jsx";
 
 export default function App() {
   const [darkmode, setDarkmode] = useState(false);
@@ -32,6 +22,29 @@ export default function App() {
     windowOnTop(isOnTop);
   }, [isOnTop]);
 
+  const navLinkList = [
+    { to: "/", icon: "interests", text: "Set" },
+    { to: "/Diff", icon: "draw_collage", text: "Diff" },
+    { to: "/Pr", icon: "rebase_edit", text: "PR" },
+    { to: "/Calc", icon: "calculate", text: "Calc" },
+  ];
+  const Navigation = memo(() => (
+    <ul className="list_menu">
+      {navLinkList.map((item, idx) => (
+        <li className="list-item" key={idx}>
+          <NavLink
+            to={item.to}
+            className={({ isActive }) =>
+              `link ${isActive ? "link-active" : ""}`
+            }
+          >
+            <span className="material-symbols-outlined icon">{item.icon}</span>
+            <span className="text">{item.text}</span>
+          </NavLink>
+        </li>
+      ))}
+    </ul>
+  ));
   return (
     <div id="wrapper" className={darkmode ? "darkmode" : ""}>
       <div className="titlebar">
@@ -65,48 +78,7 @@ export default function App() {
       </div>
       <div className="box_wrap">
         <nav className="box_sidebar">
-          <ul className="list_menu">
-            <li className="list-item">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `link ${isActive ? "link-active" : ""}`
-                }
-              >
-                <span className="material-symbols-outlined icon">
-                  draw_collage
-                </span>
-                <span className="text">Diff</span>
-              </NavLink>
-            </li>
-            <li className="list-item">
-              <NavLink
-                to="/Pr"
-                className={({ isActive }) =>
-                  `link ${isActive ? "link-active" : ""}`
-                }
-              >
-                <span className="material-symbols-outlined icon">
-                  rebase_edit
-                </span>
-                <span className="text">PR</span>
-              </NavLink>
-            </li>
-            <li className="list-item">
-              <NavLink
-                to="/Calc"
-                className={({ isActive }) =>
-                  `link ${isActive ? "link-active" : ""}`
-                }
-              >
-                <span className="material-symbols-outlined icon">
-                  calculate
-                </span>
-                <span className="text">Calc</span>
-              </NavLink>
-            </li>
-          </ul>
-
+          <Navigation />
           <button
             type="button"
             className={`button_darkmode ${darkmode ? "dark" : "light"}`}
@@ -116,24 +88,10 @@ export default function App() {
           </button>
         </nav>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Diff REPOSITORIES={REPOSITORIES} GITHUB_BASE={GITHUB_BASE} />
-            }
-          />
-          <Route
-            path="/Pr"
-            element={
-              <Pr REPOSITORIES={REPOSITORIES} GITHUB_BASE={GITHUB_BASE} />
-            }
-          />
-          <Route
-            path="/Calc"
-            element={
-              <Calc REPOSITORIES={REPOSITORIES} GITHUB_BASE={GITHUB_BASE} />
-            }
-          />
+          <Route path="/" element={<Github />} />
+          <Route path="/Diff" element={<Diff />} />
+          <Route path="/Pr" element={<Pr />} />
+          <Route path="/Calc" element={<Calc />} />
         </Routes>
       </div>
     </div>
