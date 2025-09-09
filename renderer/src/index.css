@@ -1,66 +1,4 @@
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff")
-    format("woff");
-  font-weight: 100;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff")
-    format("woff");
-  font-weight: 200;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff")
-    format("woff");
-  font-weight: 300;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff")
-    format("woff");
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
-    format("woff");
-  font-weight: 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
-    format("woff");
-  font-weight: 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff")
-    format("woff");
-  font-weight: 800;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Black.woff")
-    format("woff");
-  font-weight: 900;
-  font-display: swap;
-}
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 * {
   padding: 0;
@@ -97,6 +35,11 @@ body {
 #root {
   width: 100%;
   height: 100%;
+}
+button {
+  border: 0;
+  background: none;
+  cursor: pointer;
 }
 :root {
   --color-primary: #6366f1; /* Indigo */
@@ -148,4 +91,7 @@ body {
 }
 ::selection {
   background: rgba(34, 211, 238, 0.35);
+}
+input[type="text"] {
+  caret-color: var(--color-primary);
 }
