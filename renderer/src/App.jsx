@@ -8,7 +8,7 @@ import Github from "./GIthub.jsx";
 
 export default function App() {
   const [darkmode, setDarkmode] = useState(false);
-  const [isOnTop, setIsOnTop] = useState(true);
+  const [isOnTop, setIsOnTop] = useState(false);
   const onMinimize = () => {
     window?.winControl?.minimize();
   };

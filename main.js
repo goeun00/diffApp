@@ -18,6 +18,7 @@ function createWindow() {
     height: 450,
     minWidth: 480,
     minHeight: 450,
+    icon: path.join(__dirname, "assets/appicon.png"),
     frame: false,
     transparent: true,
     title: "🐱",

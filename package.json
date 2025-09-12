@@ -1,6 +1,6 @@
 {
   "name": "diffurltool",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Hello GUI EXE with Electron",
   "main": "main.js",
   "author": "Goeun",
@@ -22,7 +22,8 @@
       "package.json"
     ],
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "assets/appicon.ico"
     },
     "generateUpdatesFilesForAllChannels": true,
     "nsis": {
