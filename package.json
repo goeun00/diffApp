@@ -1,6 +1,6 @@
 {
   "name": "diffurltool",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Hello GUI EXE with Electron",
   "main": "main.js",
   "author": "Goeun",

@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { repositoriesAtom } from "./atom";
+import { repositoriesAtom } from "../atom";
 import { useState, useEffect } from "react";
 
 const Diff = () => {
@@ -12,21 +12,13 @@ const Diff = () => {
   }, [repositories]);
 
   const handleChangeName = (idx, value) => {
-    setDraft((prev) =>
-      prev.map((repo, i) => (i === idx ? { ...repo, name: value } : repo))
-    );
+    setDraft((prev) => prev.map((repo, i) => (i === idx ? { ...repo, name: value } : repo)));
   };
   const handleChangeUrl = (idx, value) => {
-    setDraft((prev) =>
-      prev.map((repo, i) => (i === idx ? { ...repo, url: value } : repo))
-    );
+    setDraft((prev) => prev.map((repo, i) => (i === idx ? { ...repo, url: value } : repo)));
   };
   const handleChangeMainbranch = (idx, newMainbranchArray) => {
-    setDraft((prev) =>
-      prev.map((repo, i) =>
-        i === idx ? { ...repo, mainbranch: newMainbranchArray } : repo
-      )
-    );
+    setDraft((prev) => prev.map((repo, i) => (i === idx ? { ...repo, mainbranch: newMainbranchArray } : repo)));
   };
 
   const handleDelete = (idx) => {
@@ -64,29 +56,15 @@ const Diff = () => {
       <div className="box_floating">
         {editmode ? (
           <>
-            <button
-              className="button"
-              type="button"
-              onClick={() => handleCancel()}
-            >
-              <span className="icon material-symbols-outlined">
-                close_small
-              </span>
+            <button className="button" type="button" onClick={() => handleCancel()}>
+              <span className="icon material-symbols-outlined">close_small</span>
             </button>
-            <button
-              className="button button_save"
-              type="button"
-              onClick={handleSave}
-            >
+            <button className="button button_save" type="button" onClick={handleSave}>
               <span className="material-symbols-outlined">check_small</span>
             </button>
           </>
         ) : (
-          <button
-            className="button button_edit"
-            type="button"
-            onClick={() => startEdit()}
-          >
+          <button className="button button_edit" type="button" onClick={() => startEdit()}>
             <span className="icon material-symbols-outlined">edit</span>
           </button>
         )}
@@ -95,11 +73,7 @@ const Diff = () => {
         <div className="box_entry left line wrap" key={idx}>
           <div className="box_entry-inner">
             {editmode ? (
-              <button
-                className="button_delete"
-                type="button"
-                onClick={() => handleDelete(idx)}
-              >
+              <button className="button_delete" type="button" onClick={() => handleDelete(idx)}>
                 <span className="icon material-symbols-outlined">delete</span>
               </button>
             ) : (
@@ -107,26 +81,12 @@ const Diff = () => {
             )}
 
             <span className="text_entry-line">name</span>
-            {editmode ? (
-              <input
-                className="form_entry"
-                type="text"
-                value={repo.name}
-                onChange={(e) => handleChangeName(idx, e.target.value)}
-              />
-            ) : (
-              <span className="text_entry-basic bold">{repo.name}</span>
-            )}
+            {editmode ? <input className="form_entry" type="text" value={repo.name} onChange={(e) => handleChangeName(idx, e.target.value)} /> : <span className="text_entry-basic bold">{repo.name}</span>}
           </div>
           <div className="box_entry-inner flex">
             <span className="text_entry-line">url</span>
             {editmode ? (
-              <input
-                className="form_entry single "
-                type="text"
-                value={repo.url}
-                onChange={(e) => handleChangeUrl(idx, e.target.value)}
-              />
+              <input className="form_entry single " type="text" value={repo.url} onChange={(e) => handleChangeUrl(idx, e.target.value)} />
             ) : (
               <span className="text_entry-basic">
                 <a className="link_text" href={repo.url}>
@@ -163,11 +123,7 @@ const Diff = () => {
       ))}
       {editmode && (
         <div className="box_add-repositoty">
-          <button
-            className="button_add-repositoty"
-            type="button"
-            onClick={() => handleAdd()}
-          >
+          <button className="button_add-repositoty" type="button" onClick={() => handleAdd()}>
             <span className="icon material-symbols-outlined">add</span>
           </button>
           <p className="text">add repository</p>

@@ -1,19 +1,14 @@
 // Pr.jsx
 import { useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
-import { repositoriesAtom } from "./atom";
+import { repositoriesAtom } from "../atom";
 
-const Pr = () => {
+const Pr = ({ title, icon }) => {
   const [repositories] = useAtom(repositoriesAtom);
 
-  const [selectedRepoName, setSelectedRepoName] = useState(
-    repositories[0].name
-  );
+  const [selectedRepoName, setSelectedRepoName] = useState(repositories[0].name);
 
-  const selectedRepo = useMemo(
-    () => repositories.find((r) => r.name === selectedRepoName),
-    [selectedRepoName]
-  );
+  const selectedRepo = useMemo(() => repositories.find((r) => r.name === selectedRepoName), [selectedRepoName]);
 
   const [compare1, setCompare1] = useState(selectedRepo?.mainbranch?.[0] ?? "");
   const [compare2, setCompare2] = useState("");
@@ -46,21 +41,13 @@ const Pr = () => {
   return (
     <section className="box_main">
       <h2 className="text_title2">
-        PR <span className="material-symbols-outlined">rebase_edit</span>
+        {title} <span className="material-symbols-outlined">{icon}</span>
       </h2>
 
       <ul className="list_option" role="radiogroup" aria-label="Repository">
         {repositories.map((repo, idx) => (
           <li className="list-item" key={repo.name}>
-            <input
-              type="radio"
-              id={`repository-${idx}`}
-              name="repository"
-              className="form_repository"
-              value={repo.name}
-              checked={selectedRepoName === repo.name}
-              onChange={(e) => setSelectedRepoName(e.target.value)}
-            />
+            <input type="radio" id={`repository-${idx}`} name="repository" className="form_repository" value={repo.name} checked={selectedRepoName === repo.name} onChange={(e) => setSelectedRepoName(e.target.value)} />
             <label htmlFor={`repository-${idx}`}>{repo.name}</label>
           </li>
         ))}
@@ -68,11 +55,7 @@ const Pr = () => {
 
       <div className="box_entry">
         <div className="box_entry-inner">
-          <select
-            value={compare1}
-            className="select-custom"
-            onChange={(e) => setCompare1(e.target.value)}
-          >
+          <select value={compare1} className="select-custom" onChange={(e) => setCompare1(e.target.value)}>
             {(selectedRepo?.mainbranch ?? []).map((branch) => (
               <option key={branch} value={branch}>
                 {branch}
@@ -80,15 +63,7 @@ const Pr = () => {
             ))}
           </select>
 
-          <input
-            id="compare2"
-            className="form_entry single "
-            type="text"
-            value={compare2}
-            onChange={(e) => setCompare2(e.target.value)}
-            autoComplete="off"
-            placeholder="your-branch"
-          />
+          <input id="compare2" className="form_entry single " type="text" value={compare2} onChange={(e) => setCompare2(e.target.value)} autoComplete="off" placeholder="your-branch" />
         </div>
       </div>
 
@@ -97,26 +72,14 @@ const Pr = () => {
       </div>
 
       <div className="box_main-bottom">
-        <button
-          className="submit_entry submit"
-          type="button"
-          onClick={copyToClipboard}
-        >
+        <button className="submit_entry submit" type="button" onClick={copyToClipboard}>
           <span className="material-symbols-outlined icon">content_copy</span>
           Link copy
         </button>
 
-        <a
-          className={activate ? "link_entry" : "link_entry deactivate"}
-          href={prLink || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-disabled={!activate}
-        >
+        <a className={activate ? "link_entry" : "link_entry deactivate"} href={prLink || "#"} target="_blank" rel="noopener noreferrer" aria-disabled={!activate}>
           Go Link
-          <span className="material-symbols-outlined icon">
-            arrow_right_alt
-          </span>
+          <span className="material-symbols-outlined icon">arrow_right_alt</span>
         </a>
       </div>
     </section>

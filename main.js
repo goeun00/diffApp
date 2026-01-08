@@ -43,6 +43,7 @@ function createWindow() {
   ipcMain.on("window-minimize", () => {
     win.minimize();
   });
+
   ipcMain.on("window-maximize", () => {
     if (win.isMaximized()) {
       win.unmaximize();
@@ -50,11 +51,34 @@ function createWindow() {
       win.maximize();
     }
   });
+
   ipcMain.on("window-close", () => {
     win.close();
   });
+
   ipcMain.on("window-ontop", (_event, flag) => {
     win.setAlwaysOnTop(!!flag);
+  });
+
+  let isMini = false;
+  let normalBounds = null;
+
+  ipcMain.on("toggle-mini-mode", () => {
+    if (!win) return;
+    if (!isMini) {
+      normalBounds = win.getBounds();
+      const { width, height } =
+        require("electron").screen.getPrimaryDisplay().workAreaSize;
+      const size = 50;
+      win.setSize(size, size);
+      win.setPosition(width - size - 20, height - size - 20);
+      win.webContents.send("mini-mode", true);
+      isMini = true;
+    } else {
+      win.setBounds(normalBounds);
+      win.webContents.send("mini-mode", false);
+      isMini = false;
+    }
   });
 }
 
