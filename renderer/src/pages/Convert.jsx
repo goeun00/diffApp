@@ -32,7 +32,7 @@ const Convert = ({ title, icon }) => {
       setMockupUrl("");
       return;
     }
-    const url = filePath.replace(regexPage, "//$1-app-starro.d3.clouz.io/$2");
+    const url = filePath.replace(regexPage, "https://$1-app-starro.d3.clouz.io/$2");
     setMockupUrl(url);
     setInfo(parsePathInfo(filePath));
   }, [filePath]);
@@ -53,7 +53,7 @@ const Convert = ({ title, icon }) => {
     const pathParts = cssPath.split(/[\\/]/);
     const page = pathParts[0];
     const finalFile = `${page}.css`;
-    const url = `//script.gmarket.co.kr/starro/${platform}/css/${page}/${finalFile}`;
+    const url = `https://script.gmarket.co.kr/starro/${platform}/css/${page}/${finalFile}`;
     setCssUrl(url);
   }, [filePath2]);
 
